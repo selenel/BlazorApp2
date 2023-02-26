@@ -1,0 +1,38 @@
+﻿@page "/DogImages"
+@using BlazorApp2.Shared
+
+<h3>ListMembers</h3>
+
+
+<div class="table-responsive">
+    <table class="table table-dark table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>氏名</th>
+                <th>性別</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (members != null) foreach (var m in members)
+                {
+                    <tr>
+                        <td>@m.MemberId</td>
+                        <td>@m.MemberName</td>
+                        <td>@m.MemberGender</td>
+                    </tr>
+                }
+        </tbody>
+    </table>
+</div>
+
+
+@code {
+    [Inject]
+    public HttpClient httpClient { get; set; }
+    private List<MemberOverview> members { get; set; } = new List<MemberOverview>();
+    protected override async Task OnInitializedAsync()
+    {
+        members = await httpClient.GetFromJsonAsync<List<MemberOverview>>("/MemberService/GetMembers");
+    }
+}

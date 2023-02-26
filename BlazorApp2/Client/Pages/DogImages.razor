@@ -1,0 +1,29 @@
+﻿@page "/DogImage"
+@using BlazorApp2.Shared
+@using Newtonsoft.Json.Linq
+@using System.Text.Json.Serialization
+@using System.Text.Json
+@using System.Net.Http.Json
+
+<h3>ListMembers</h3>
+
+
+<div>
+    @if (dogData != null) 
+        {
+            <img src="@dogData"/>
+        }
+</div>
+
+
+@code {
+    [Inject]
+    public HttpClient httpClient { get; set; }
+    //private JObject dogData { get; set; } = new JObject();
+    private object dogData;
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await httpClient.GetFromJsonAsync<object>("https://dog.ceo/api/breeds/image/random");
+        dogData = response.ToString().Split("\"")[3];
+    }
+}
