@@ -17,7 +17,7 @@ namespace BlazorApp2.Server.Controllers
         }
 
         [HttpGet("GetMembers")]
-        public async Task<List<MemberOverview>> GetAuthors()
+        public async Task<List<MemberOverview>> GetMembers()
         {
             var result = new List<MemberOverview>();
 

@@ -33,6 +33,11 @@
     private List<MemberOverview> members { get; set; } = new List<MemberOverview>();
     protected override async Task OnInitializedAsync()
     {
-        members = await httpClient.GetFromJsonAsync<List<MemberOverview>>("/MemberService/GetMembers");
+        var response = await httpClient.GetFromJsonAsync<List<MemberOverview>>("/MemberService/GetMembers");
+        
+        if (response != null)
+            members = response;
+        }
+       
     }
 }
